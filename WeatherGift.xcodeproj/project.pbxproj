@@ -8,20 +8,24 @@
 
 /* Begin PBXBuildFile section */
 		7E9458731E5C736A00DE4A7E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E9458721E5C736A00DE4A7E /* AppDelegate.swift */; };
-		7E9458751E5C736A00DE4A7E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E9458741E5C736A00DE4A7E /* ViewController.swift */; };
 		7E9458781E5C736B00DE4A7E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7E9458761E5C736B00DE4A7E /* Main.storyboard */; };
 		7E94587A1E5C736B00DE4A7E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7E9458791E5C736B00DE4A7E /* Assets.xcassets */; };
 		7E94587D1E5C736B00DE4A7E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7E94587B1E5C736B00DE4A7E /* LaunchScreen.storyboard */; };
+		7E9458851E5C744C00DE4A7E /* DetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E9458841E5C744C00DE4A7E /* DetailVC.swift */; };
+		7E9458871E5C7FC500DE4A7E /* ListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E9458861E5C7FC500DE4A7E /* ListVC.swift */; };
+		7E9458891E5C88F200DE4A7E /* PageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E9458881E5C88F200DE4A7E /* PageVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		7E94586F1E5C736A00DE4A7E /* WeatherGift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeatherGift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7E9458721E5C736A00DE4A7E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		7E9458741E5C736A00DE4A7E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		7E9458771E5C736B00DE4A7E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		7E9458791E5C736B00DE4A7E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7E94587C1E5C736B00DE4A7E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7E94587E1E5C736B00DE4A7E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7E9458841E5C744C00DE4A7E /* DetailVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailVC.swift; sourceTree = "<group>"; };
+		7E9458861E5C7FC500DE4A7E /* ListVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListVC.swift; sourceTree = "<group>"; };
+		7E9458881E5C88F200DE4A7E /* PageVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,7 +59,9 @@
 			isa = PBXGroup;
 			children = (
 				7E9458721E5C736A00DE4A7E /* AppDelegate.swift */,
-				7E9458741E5C736A00DE4A7E /* ViewController.swift */,
+				7E9458841E5C744C00DE4A7E /* DetailVC.swift */,
+				7E9458861E5C7FC500DE4A7E /* ListVC.swift */,
+				7E9458881E5C88F200DE4A7E /* PageVC.swift */,
 				7E9458761E5C736B00DE4A7E /* Main.storyboard */,
 				7E9458791E5C736B00DE4A7E /* Assets.xcassets */,
 				7E94587B1E5C736B00DE4A7E /* LaunchScreen.storyboard */,
@@ -137,8 +143,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7E9458751E5C736A00DE4A7E /* ViewController.swift in Sources */,
+				7E9458871E5C7FC500DE4A7E /* ListVC.swift in Sources */,
+				7E9458891E5C88F200DE4A7E /* PageVC.swift in Sources */,
 				7E9458731E5C736A00DE4A7E /* AppDelegate.swift in Sources */,
+				7E9458851E5C744C00DE4A7E /* DetailVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -263,6 +271,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 94SQTE3M4C;
 				INFOPLIST_FILE = WeatherGift/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "Evelyn-Baxley.WeatherGift";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -276,6 +285,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 94SQTE3M4C;
 				INFOPLIST_FILE = WeatherGift/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "Evelyn-Baxley.WeatherGift";
 				PRODUCT_NAME = "$(TARGET_NAME)";

@@ -15,6 +15,8 @@ class PageVC: UIPageViewController {
                           "Sydney, Australia",
                           "Accra, Ghana",
                           "Uglich, Russia"]
+    var pageControl: UIPageControl!
+    let barButtonWidth: CGFloat = 44
     
     
     override func viewDidLoad() {
@@ -26,8 +28,23 @@ class PageVC: UIPageViewController {
         
         setViewControllers([createDetailVC(forPage: 0)], direction: .forward, animated: false, completion: nil)
         
-
+        configurePageControl()
     }
+    
+    func configurePageControl() {
+        let pageControlHeight: CGFloat = barButtonWidth
+        let pageControlWidth: CGFloat = view.frame.width - (barButtonWidth * 2)
+        
+        pageControl = UIPageControl(frame: CGRect(x: (view.frame.width - pageControlWidth) / 2, y: view.frame.height - pageControlHeight, width: pageControlWidth, height: pageControlHeight))
+        
+        pageControl.pageIndicatorTintColor = UIColor.lightGray
+        pageControl.currentPageIndicatorTintColor = UIColor.black
+        pageControl.numberOfPages = locationsArray.count
+        pageControl.currentPage = currentPage
+        
+        view.addSubview(pageControl)
+    }
+    
 //forPage means you have to create a DetailVC to pass in the page
 // -> means pass back
     func createDetailVC(forPage page: Int) -> DetailVC {
@@ -63,5 +80,11 @@ extension PageVC: UIPageViewControllerDataSource, UIPageViewControllerDelegate {
             }
         }
         return nil
+    }
+    
+    func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
+        if let currentViewController = pageViewController.viewControllers?[0] as? DetailVC {
+        pageControl.currentPage = currentViewController.currentPage
+        }
     }
 }

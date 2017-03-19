@@ -16,8 +16,8 @@ class PageVC: UIPageViewController {
                           "Accra, Ghana",
                           "Uglich, Russia"]
     var pageControl: UIPageControl!
+    var listButton: UIButton!
     let barButtonWidth: CGFloat = 44
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,8 +29,10 @@ class PageVC: UIPageViewController {
         setViewControllers([createDetailVC(forPage: 0)], direction: .forward, animated: false, completion: nil)
         
         configurePageControl()
+        configureListButton()
     }
-    
+
+    //MARK: - UI Configuration Methods
     func configurePageControl() {
         let pageControlHeight: CGFloat = barButtonWidth
         let pageControlWidth: CGFloat = view.frame.width - (barButtonWidth * 2)
@@ -45,6 +47,39 @@ class PageVC: UIPageViewController {
         view.addSubview(pageControl)
     }
     
+    func configureListButton() {
+        let barButtonHeight = barButtonWidth
+        
+        listButton = UIButton(frame: CGRect(x: view.frame.width - barButtonWidth, y: view.frame.height - barButtonHeight, width: barButtonWidth, height: barButtonHeight))
+        
+        listButton.setBackgroundImage(UIImage(named:"listbutton"), for: .normal)
+        listButton.setBackgroundImage(UIImage(named:"listbutton-highlighted"), for: .highlighted)
+        
+        listButton.addTarget(self, action: #selector(segueToListVC), for: .touchUpInside)
+        
+        view.addSubview(listButton)
+    }
+//MARK: - Segues
+    
+    func segueToListVC(sender: UIButton!){
+        performSegue(withIdentifier: "ToListVC", sender: sender)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "ToListVC" {
+            let controller = segue.destination as! ListVC
+            controller.locationsArray = locationsArray
+            controller.currentPage = currentPage
+        }
+    }
+    
+    @IBAction func unwindFromListVC(sender: UIStoryboardSegue) {
+        pageControl.numberOfPages = locationsArray.count
+        pageControl.currentPage = currentPage
+        setViewControllers([createDetailVC(forPage: currentPage)], direction: .forward, animated: false, completion: nil)
+    }
+
+//MARK: - Create View Controller for UIPageViewController
 //forPage means you have to create a DetailVC to pass in the page
 // -> means pass back
     func createDetailVC(forPage page: Int) -> DetailVC {

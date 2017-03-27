@@ -9,12 +9,10 @@
 import UIKit
 
 class PageVC: UIPageViewController {
+    
 //instance variables: variables available throughout the class. Declare after class definition and before first func
     var currentPage = 0
-    var locationsArray = ["Local City",
-                          "Sydney, Australia",
-                          "Accra, Ghana",
-                          "Uglich, Russia"]
+    var locationsArray = [WeatherLocation]()
     var pageControl: UIPageControl!
     var listButton: UIButton!
     let barButtonWidth: CGFloat = 44
@@ -25,6 +23,10 @@ class PageVC: UIPageViewController {
         delegate = self
         //this view source you're creating? Whole class is going to pay attention to it and it will be the source of the data that controls the view controller
         dataSource = self
+        
+        var newLocation = WeatherLocation()
+        newLocation.name = "Unknown Weather Location"
+        locationsArray.append(newLocation)
         
         setViewControllers([createDetailVC(forPage: 0)], direction: .forward, animated: false, completion: nil)
         

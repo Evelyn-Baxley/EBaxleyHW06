@@ -112,12 +112,12 @@ extension ListVC: UITableViewDataSource, UITableViewDelegate {
         }
     }
     
-    func updateTable(placeName: GMSPlace) {
+    func updateTable(place: GMSPlace) {
         var newLocation = WeatherLocation()
-        newLocation.name = placeName.name
-        let lat = placeName.coordinate.latitude
-        let long = placeName.coordinate.longitude
-        newLocation.coordinates = "\(lat).\(long)"
+        newLocation.name = place.name
+        let lat = place.coordinate.latitude
+        let long = place.coordinate.longitude
+        newLocation.coordinates = "\(lat),\(long)"
         print(newLocation.coordinates)
         locationsArray.append(newLocation)
         tableView.reloadData()
@@ -129,7 +129,7 @@ extension ListVC: GMSAutocompleteViewControllerDelegate {
     // Handle the user's selection.
     func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
         dismiss(animated: true, completion: nil)
-        updateTable(placeName: place)
+        updateTable(place: place)
 
     }
     

@@ -25,23 +25,39 @@ class DetailVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         locationManager.delegate = self
+        locationsArray[currentPage].getWeather {
+            self.updateUserInterface()
+        }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
         if currentPage == 0 {
             getLocation()
         }
-        updateUserInterface()
-    }
-
-    func updateUserInterface() {
-        locationLabel.text = locationsArray[currentPage].name
-        dateLabel.text = locationsArray[currentPage].coordinates
     }
     
+    func updateUserInterface() {
+        
+        let isHidden = (locationsArray[currentPage].currentTemp == -999.9)
+            temperatureLabel.isHidden = isHidden
+            locationLabel.isHidden = isHidden
+        
+        locationLabel.text = locationsArray[currentPage].name
+        dateLabel.text = locationsArray[currentPage].coordinates
+        let curTemperature = String(format: "%3.f", locationsArray[currentPage].currentTemp) + "°"
+        temperatureLabel.text = curTemperature
+        print("%%% curTemperature inside updateUserInterface = \(curTemperature)")
+        summaryLabel.text = locationsArray[currentPage].dailySummary
+    }
 }
+
 
 extension DetailVC: CLLocationManagerDelegate {
     
     func getLocation() {
         let status = CLLocationManager.authorizationStatus()
+        
         handleLocationAuthorizationStatus(status: status)
     }
     
@@ -62,40 +78,42 @@ extension DetailVC: CLLocationManagerDelegate {
         handleLocationAuthorizationStatus(status: status)
     }
     
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations:
+        [CLLocation]) {
         
         if currentPage == 0 {
+            
             let geoCoder = CLGeocoder()
             
             currentLocation = locations.last
+            
             
             let currentLat = "\(currentLocation.coordinate.latitude)"
             let currentLong = "\(currentLocation.coordinate.longitude)"
             
             print("Coordinates are: " + currentLat + currentLong)
-            locationManager.stopUpdatingLocation()
             
             var place = ""
-            geoCoder.reverseGeocodeLocation(currentLocation, completionHandler: {placemarks,
-                error in
-                if placemarks != nil {
-                    let placemark = placemarks!.last
-                    place = (placemark?.name!)!
-                } else {
-                    print("Error retrieving place. Error code \(error)")
-                    place = "Parts Unknown"
-                }
-                print(place)
-                self.locationsArray[0].name = place
-                self.locationsArray[0].coordinates = currentLat + "," + currentLong
-                self.locationsArray[0].getWeather()
-                self.updateUserInterface()
+            geoCoder.reverseGeocodeLocation(currentLocation, completionHandler:
+                {placemarks, error in
+                    if placemarks != nil {
+                        let placemark = placemarks!.last
+                        place = (placemark?.name!)!
+                    } else {
+                        print("Error retrieving place. Error code \(error)")
+                        place = "Parts Unknown"
+                    }
+                    print(place)
+                    self.locationsArray[0].name = place
+                    self.locationsArray[0].coordinates = currentLat + "," + currentLong
+                    self.locationsArray[0].getWeather {
+                        self.updateUserInterface()
+                    }
             })
         }
-         locationManager.stopUpdatingLocation()
+        locationManager.stopUpdatingLocation()
     }
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("Error getting location - error code \(error)")
     }
-    
 }

@@ -57,7 +57,14 @@ class ListVC: UIViewController {
         present(autocompleteController, animated: true, completion: nil)
     }
     
-}
+    func saveUserDefaults() {
+        var locationsDefaultsArray = [WeatherUserDefault]()
+        locationsDefaultsArray = locationsArray
+        let locationsData = NSKeyedArchiver.archivedData(withRootObject: locationsDefaultsArray)
+        UserDefaults.standard.set(locationsData, forKey: "locationsData")
+        }
+    }
+    
 
 extension ListVC: UITableViewDataSource, UITableViewDelegate {
     
@@ -79,6 +86,7 @@ extension ListVC: UITableViewDataSource, UITableViewDelegate {
         if editingStyle == .delete {
              locationsArray.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
+            saveUserDefaults()
         }
     }
     
@@ -89,7 +97,10 @@ extension ListVC: UITableViewDataSource, UITableViewDelegate {
         locationsArray.remove(at: sourceIndexPath.row)
         //Insert item into the "to", post-move location
         locationsArray.insert(itemToMove, at: destinationIndexPath.row)
+        
+        saveUserDefaults()
     }
+    
     //MARK: - TableView Code to Freeze the First Cell - No Deleting or Moving
     
     func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
@@ -113,14 +124,14 @@ extension ListVC: UITableViewDataSource, UITableViewDelegate {
     }
     
     func updateTable(place: GMSPlace) {
-        var newLocation = WeatherLocation()
+        let newLocation = WeatherLocation()
         newLocation.name = place.name
         let lat = place.coordinate.latitude
         let long = place.coordinate.longitude
         newLocation.coordinates = "\(lat),\(long)"
-        print(newLocation.coordinates)
         locationsArray.append(newLocation)
         tableView.reloadData()
+        saveUserDefaults()
     }
 }
 
